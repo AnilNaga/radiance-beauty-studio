@@ -1,8 +1,18 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, Star } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+
+const textReveal = {
+  hidden: { opacity: 0, y: 60, filter: "blur(8px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.9, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  }),
+};
 
 const Hero = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,99 +27,119 @@ const Hero = () => {
 
   return (
     <section ref={ref} id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with Parallax */}
+      {/* Background */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <img src={heroBg} alt="Radiance Beauty Parlour" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-900/80 via-pink-900/60 to-pink-900/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-950/85 via-pink-900/65 to-pink-800/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pink-950/70 via-transparent to-transparent" />
       </motion.div>
 
       {/* Floating Particles */}
-      {Array.from({ length: 8 }).map((_, i) => (
+      {Array.from({ length: 6 }).map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 rounded-full bg-pink-300/30"
-          style={{
-            left: `${10 + i * 12}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [-20, 20, -20],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 4 + i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.3,
-          }}
+          className="absolute w-1.5 h-1.5 rounded-full bg-pink-300/20"
+          style={{ left: `${15 + i * 14}%`, top: `${25 + (i % 3) * 20}%` }}
+          animate={{ y: [-15, 15, -15], opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 5 + i * 0.7, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
         />
       ))}
 
       {/* Content */}
-      <motion.div
-        style={{ opacity, scale }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24"
-      >
-        <div className="max-w-3xl">
+      <motion.div style={{ opacity, scale }} className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex items-center gap-2 mb-6"
+            custom={0}
+            variants={textReveal}
+            initial="hidden"
+            animate="visible"
+            className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full border border-pink-300/20 bg-pink-300/5 backdrop-blur-sm"
           >
-            <Sparkles className="w-5 h-5 text-pink-300" />
-            <span className="text-pink-200 text-sm tracking-[0.2em] uppercase font-medium">
+            <Sparkles className="w-4 h-4 text-pink-300" />
+            <span className="text-pink-200 text-xs tracking-[0.25em] uppercase font-medium">
               Premium Beauty Experience
             </span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light text-primary-foreground leading-[0.95] mb-6"
-          >
-            Enhance Your{" "}
-            <span className="font-semibold italic bg-gradient-to-r from-pink-300 via-pink-200 to-pink-300 bg-clip-text text-transparent">
-              Natural Beauty
-            </span>
-          </motion.h1>
+          {/* Main Heading */}
+          <div className="overflow-hidden mb-3">
+            <motion.h1
+              custom={1}
+              variants={textReveal}
+              initial="hidden"
+              animate="visible"
+              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extralight text-primary-foreground leading-[1] tracking-tight"
+            >
+              Enhance Your
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-8">
+            <motion.h1
+              custom={2}
+              variants={textReveal}
+              initial="hidden"
+              animate="visible"
+              className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-semibold italic leading-[1] tracking-tight"
+            >
+              <span className="bg-gradient-to-r from-pink-300 via-pink-200 to-pink-400 bg-clip-text text-transparent">
+                Natural Beauty
+              </span>
+            </motion.h1>
+          </div>
 
+          {/* Decorative line */}
+          <motion.div
+            custom={3}
+            variants={textReveal}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center justify-center gap-3 mb-8"
+          >
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-pink-300/50" />
+            <Star className="w-3 h-3 text-pink-300/60 fill-pink-300/60" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-pink-300/50" />
+          </motion.div>
+
+          {/* Subtext */}
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg sm:text-xl text-pink-100/80 max-w-xl mb-4 leading-relaxed"
+            custom={4}
+            variants={textReveal}
+            initial="hidden"
+            animate="visible"
+            className="text-base sm:text-lg text-pink-100/70 max-w-lg mx-auto mb-3 leading-relaxed font-light"
           >
             Professional beauty care, flawless makeup, radiant skin treatments, and luxurious pampering — all in one place.
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-pink-300 text-sm italic tracking-wide mb-10"
+            custom={5}
+            variants={textReveal}
+            initial="hidden"
+            animate="visible"
+            className="text-pink-300/80 text-sm italic tracking-wider mb-12"
           >
-            Glow with Confidence. Shine with Elegance.
+            Glow with Confidence · Shine with Elegance
           </motion.p>
 
+          {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-4"
+            custom={6}
+            variants={textReveal}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link
               to="/appointment"
-              className="group gradient-hero px-8 py-4 rounded-full text-primary-foreground font-medium text-lg flex items-center gap-2 shadow-pink hover:shadow-hover transition-all duration-300 hover:scale-105"
+              className="group gradient-hero px-10 py-4 rounded-full text-primary-foreground font-medium text-base flex items-center gap-2 shadow-pink hover:shadow-hover transition-all duration-300 hover:scale-105"
             >
               Book Appointment
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
               href="#services"
-              className="px-8 py-4 rounded-full border-2 border-pink-300/40 text-primary-foreground font-medium text-lg hover:bg-pink-300/10 transition-all duration-300 hover:border-pink-300/70"
+              className="px-10 py-4 rounded-full border border-pink-300/30 text-primary-foreground font-medium text-base hover:bg-pink-300/10 transition-all duration-300 hover:border-pink-300/60"
             >
               Explore Services
             </a>
@@ -120,15 +150,15 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 1.5 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-pink-300/50 flex justify-center pt-2"
+            className="w-5 h-9 rounded-full border border-pink-300/40 flex justify-center pt-2"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-pink-300" />
+            <div className="w-1 h-1 rounded-full bg-pink-300/80" />
           </motion.div>
         </motion.div>
       </motion.div>
