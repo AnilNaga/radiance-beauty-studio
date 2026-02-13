@@ -1,14 +1,27 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Hero from "@/components/beauty/Hero";
+import About from "@/components/beauty/About";
+import Experts from "@/components/beauty/Experts";
+import Services from "@/components/beauty/Services";
+import BridalPackages from "@/components/beauty/BridalPackages";
+import WorkingHours from "@/components/beauty/WorkingHours";
+import WhyChooseUs from "@/components/beauty/WhyChooseUs";
+import AftercareTips from "@/components/beauty/AftercareTips";
+import Testimonials from "@/components/beauty/Testimonials";
+import Contact from "@/components/beauty/Contact";
 
-const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
-};
+const Index = () => (
+  <>
+    <Hero />
+    <About />
+    <Experts />
+    <Services />
+    <BridalPackages />
+    <WorkingHours />
+    <WhyChooseUs />
+    <AftercareTips />
+    <Testimonials />
+    <Contact />
+  </>
+);
 
 export default Index;
